@@ -1,0 +1,578 @@
+/* ==========================================
+   1. VARIABLES & BASE STYLES
+   ========================================== */
+:root {
+    --bg-ivory: #FDFBF7;
+    --gold-primary: #D4AF37;
+    --gold-light: #F3E5AB;
+    --gold-dark: #AA7C11;
+    --text-dark: #2C2A29;
+    --text-muted: #5C5856;
+    --glass-bg: rgba(253, 251, 247, 0.85);
+    --glass-shadow: 0 15px 35px rgba(170, 124, 17, 0.15);
+    --transition-smooth: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-ivory);
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   2. REUSABLE PREMIUM UTILITIES & ANIMATIONS
+   ========================================== */
+.btn {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: var(--transition-smooth);
+}
+
+.premium-btn {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary), var(--gold-dark));
+    background-size: 200% auto;
+    color: #fff;
+    padding: 14px 35px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(170, 124, 17, 0.3);
+}
+
+.premium-btn:hover {
+    background-position: right center;
+    box-shadow: 0 6px 20px rgba(170, 124, 17, 0.5), 0 0 10px rgba(212, 175, 55, 0.5);
+    transform: translateY(-2px);
+}
+
+.gold-shimmer {
+    background: linear-gradient(90deg, #aa7c11, #f3e5ab, #aa7c11);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* Scroll Reveal base configuration */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: var(--transition-smooth);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================
+   3. PRELOADER
+   ========================================== */
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-ivory);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-logo {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: var(--gold-dark);
+    margin-bottom: 10px;
+}
+
+.gold-line {
+    height: 2px;
+    width: 60px;
+    background: var(--gold-primary);
+    margin: 0 auto 15px;
+    animation: expandLine 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes expandLine {
+    0% { width: 20px; }
+    100% { width: 100px; }
+}
+
+/* ==========================================
+   4. ENVELOPE INTERACTIVE SYSTEM
+   ========================================== */
+.envelope-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #fbf9f3 0%, #ebdcb9 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: transform 1s ease-in-out, opacity 0.8s ease;
+}
+
+.envelope {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    background-color: #f4eee1;
+    border: 2px solid var(--gold-primary);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wax-seal {
+    position: absolute;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #c92a2a 0%, #821414 100%);
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 0 8px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.wax-seal:hover {
+    transform: scale(1.05);
+}
+
+.seal-initials {
+    font-family: 'Cormorant Garamond', serif;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.envelope-wrapper.open {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ==========================================
+   5. DECORATIONS & BG OBJECTS
+   ========================================== */
+#petals-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.music-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 99;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Base64 Minimal white floral corner elements placeholder for seamless experience */
+.floral-corner {
+    position: fixed;
+    width: 120px;
+    height: 120px;
+    opacity: 0.15;
+    z-index: 2;
+    pointer-events: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.top-left {
+    top: 10px;
+    left: 10px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 C30,0 70,20 80,50 C60,40 20,30 0,0 Z' fill='%23AA7C11'/%3E%3Cpath d='M0,0 C0,30 20,70 50,80 C40,60 30,20 0,0 Z' fill='%23AA7C11'/%3E%3C/svg%3E");
+}
+.top-right {
+    top: 10px;
+    right: 10px;
+    transform: rotate(90deg);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 C30,0 70,20 80,50 C60,40 20,30 0,0 Z' fill='%23AA7C11'/%3E%3Cpath d='M0,0 C0,30 20,70 50,80 C40,60 30,20 0,0 Z' fill='%23AA7C11'/%3E%3C/svg%3E");
+}
+
+/* ==========================================
+   6. MAIN WEBSITE CONTENT LAYOUT
+   ========================================== */
+.main-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 4;
+}
+
+.hidden {
+    display: none;
+}
+
+/* --- Hero Section --- */
+.hero {
+    padding: 80px 20px 40px;
+}
+
+.event-tag {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 25px;
+}
+
+.couple-name {
+    font-family: 'Great Vibes', cursive;
+    font-size: 4rem;
+    color: var(--text-dark);
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.heart-icon-wrap {
+    margin: 15px 0;
+}
+
+.heart-pulse {
+    color: #c92a2a;
+    font-size: 1.5rem;
+    animation: heartPulse 1.4s infinite ease-in-out;
+}
+
+@keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+}
+
+.invitation-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 30px auto;
+    line-height: 1.6;
+}
+
+.decorative-divider {
+    width: 150px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+    margin: 30px auto;
+}
+
+/* --- Details Card Section --- */
+.details-section {
+    margin: 40px 0;
+}
+
+.details-card {
+    background: var(--glass-bg);
+    border: 1px solid rgba(214, 175, 55, 0.3);
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-border-glow {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background: linear-gradient(135deg, rgba(212,175,55,0.4), transparent, rgba(212,175,55,0.4)) border-box;
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.details-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: var(--gold-dark);
+    margin-bottom: 35px;
+    letter-spacing: 2px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    margin-bottom: 25px;
+    padding-left: 10%;
+}
+
+.detail-item:last-child {
+    margin-bottom: 0;
+}
+
+.icon-box {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--gold-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--gold-dark);
+    margin-right: 20px;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.detail-text h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gold-dark);
+    margin-bottom: 2px;
+}
+
+.detail-text p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* --- Countdown Section --- */
+.countdown-section {
+    margin: 60px 0;
+}
+
+.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    color: var(--gold-dark);
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.countdown-box {
+    background: var(--glass-bg);
+    border: 1px solid rgba(214, 175, 55, 0.2);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    border-radius: 12px;
+    width: 75px;
+    padding: 15px 0;
+}
+
+.countdown-box span {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--gold-dark);
+    display: block;
+}
+
+.countdown-box p {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+/* --- Location Section --- */
+.location-section {
+    margin: 60px 0;
+}
+
+.venue-sub {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.map-frame {
+    width: 100%;
+    height: 280px;
+    border-radius: 15px;
+    border: 1px solid var(--gold-primary);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+    margin-bottom: 25px;
+}
+
+/* --- RSVP Section --- */
+.rsvp-section {
+    margin: 60px 0;
+}
+
+.rsvp-card {
+    background: linear-gradient(to bottom, #ffffff, #faf6ee);
+    border: 1px dashed var(--gold-primary);
+    padding: 40px 20px;
+    border-radius: 16px;
+}
+
+.rsvp-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+
+.rsvp-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 25px;
+}
+
+.rsvp-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.rsvp-btn {
+    padding: 12px 28px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+}
+
+.rsvp-btn.attend {
+    background-color: var(--text-dark);
+    color: #fff;
+}
+
+.rsvp-btn.attend:hover {
+    background-color: #000;
+    transform: translateY(-2px);
+}
+
+.rsvp-btn.decline {
+    background-color: transparent;
+    border-color: var(--text-muted);
+    color: var(--text-muted);
+}
+
+.rsvp-btn.decline:hover {
+    background-color: rgba(0,0,0,0.03);
+    transform: translateY(-2px);
+}
+
+/* --- Footer --- */
+footer {
+    padding: 60px 20px 40px;
+}
+
+.quote {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.2rem;
+    color: var(--gold-dark);
+}
+
+.footer-divider {
+    width: 50px;
+    height: 1px;
+    background: var(--gold-primary);
+    margin: 20px auto;
+}
+
+.closing {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* ==========================================
+   7. MOBILE RESPONSIVENESS
+   ========================================== */
+@media (max-width: 600px) {
+    .couple-name {
+        font-size: 2.8rem;
+    }
+    .hero {
+        padding-top: 50px;
+    }
+    .detail-item {
+        padding-left: 2%;
+    }
+    .countdown-box {
+        width: 65px;
+        padding: 10px 0;
+    }
+    .countdown-box span {
+        font-size: 1.4rem;
+    }
+    .rsvp-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    .rsvp-btn {
+        width: 100%;
+        max-width: 240px;
+    }
+}

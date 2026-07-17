@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation | Auns & Aleena</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- 1. Preloader / Loading Screen -->
+    <div id="loader" class="loader-container">
+        <div class="loader-content">
+            <h2 class="loader-logo">A & A</h2>
+            <div class="gold-line"></div>
+            <p>Loading Invitation...</p>
+        </div>
+    </div>
+
+    <!-- Music Control Button -->
+    <button id="music-toggle" class="music-btn" aria-label="Toggle Music">
+        <i class="fas fa-music"></i>
+    </button>
+    <!-- Audio Element (Add your premium instrumental audio file link here) -->
+    <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <!-- 2. Luxury Envelope Opening System -->
+    <div id="envelope-wrapper" class="envelope-wrapper">
+        <div class="envelope">
+            <div class="wax-seal" id="wax-seal">
+                <span class="seal-initials">A&A</span>
+            </div>
+            <div class="envelope-flap"></div>
+            <div class="envelope-paper">
+                <div class="paper-preview">
+                    <h3>The Wedding of</h3>
+                    <h2>Auns & Aleena</h2>
+                </div>
+            </div>
+        </div>
+        <button id="open-btn" class="btn premium-btn">Open Invitation</button>
+    </div>
+
+    <!-- 3. Main Website Content (Hidden until envelope opens) -->
+    <main id="main-content" class="main-content hidden">
+        <!-- Floating Petals Canvas -->
+        <canvas id="petals-canvas"></canvas>
+
+        <!-- Decorative Floral Fixed Corners -->
+        <div class="floral-corner top-left"></div>
+        <div class="floral-corner top-right"></div>
+
+        <!-- Hero Section -->
+        <section class="hero reveal">
+            <div class="hero-inner">
+                <span class="event-tag gold-shimmer">Shalima Event</span>
+                
+                <h1 class="couple-name">M. Auns Irfan</h1>
+                <div class="heart-icon-wrap">
+                    <i class="fas fa-heart heart-pulse"></i>
+                </div>
+                <h1 class="couple-name">Aleena Ishtiaq</h1>
+                
+                <p class="invitation-text">
+                    “Together with our families, we joyfully invite you to celebrate our wedding.”
+                </p>
+                <div class="decorative-divider"></div>
+            </div>
+        </section>
+
+        <!-- Details Card Section -->
+        <section class="details-section reveal">
+            <div class="details-card">
+                <div class="card-border-glow"></div>
+                <h2>Wedding Details</h2>
+                
+                <div class="detail-item">
+                    <div class="icon-box"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="detail-text">
+                        <h3>Date</h3>
+                        <p>14 November 2026</p>
+                    </div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="icon-box"><i class="fas fa-clock"></i></div>
+                    <div class="detail-text">
+                        <h3>Time</h3>
+                        <p>1:00 PM – 4:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="detail-text">
+                        <h3>Venue</h3>
+                        <p>Le Aura Grand Marquee</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Timer Section -->
+        <section class="countdown-section reveal">
+            <h2 class="section-title">The Countdown</h2>
+            <div class="countdown-container">
+                <div class="countdown-box">
+                    <span id="days">00</span>
+                    <p>Days</p>
+                </div>
+                <div class="countdown-box">
+                    <span id="hours">00</span>
+                    <p>Hours</p>
+                </div>
+                <div class="countdown-box">
+                    <span id="minutes">00</span>
+                    <p>Minutes</p>
+                </div>
+                <div class="countdown-box">
+                    <span id="seconds">00</span>
+                    <p>Seconds</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section class="location-section reveal">
+            <h2 class="section-title">Venue Location</h2>
+            <p class="venue-sub">Le Aura Grand Marquee</p>
+            
+            <!-- Map Placeholder / Embed Iframe Frame -->
+            <div class="map-frame">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3402.5517332219714!2d74.4011883!3d31.4815197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3919092496a75f85%3A0xe9efef359392e21b!2sLe%20Aura%20Grand%20Marquee!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+
+            <a href="https://maps.app.goo.gl/PMvD3bVZJBwWqLvJ6?g_st=ic" target="_blank" class="btn premium-btn location-btn">
+                <i class="fas fa-location-arrow"></i> Open in Google Maps
+            </a>
+        </section>
+
+        <!-- RSVP Section -->
+        <section class="rsvp-section reveal">
+            <div class="rsvp-card">
+                <h2>Will You Attend?</h2>
+                <p>Please let us know if you will be joining our celebration.</p>
+                <div class="rsvp-actions">
+                    <button class="btn rsvp-btn attend" onclick="handleRSVP(true)">
+                        <i class="fas fa-check"></i> Attend
+                    </button>
+                    <button class="btn rsvp-btn decline" onclick="handleRSVP(false)">
+                        <i class="fas fa-times"></i> Unable to Attend
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="reveal">
+            <p class="quote">“Two hearts, one soul, and a lifetime of love.”</p>
+            <div class="footer-divider"></div>
+            <p class="closing">We look forward to celebrating with you.</p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
