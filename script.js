@@ -104,34 +104,32 @@ document.addEventListener("DOMContentLoaded", () => {
                                 // STEP 8: Background darkens
                                 envelopeWrapper.style.background = "radial-gradient(ellipse at center, #fdfbf7 0%, #e8d5b8 60%, #c4a882 100%)";
                                 
-                                // STEP 9: Card expands to full screen
+                                // STEP 9: Bright light engulfs everything, then reveals the details
                                 setTimeout(() => {
-                                    // Fade envelope, show main content with glow
-                                    envelopeWrapper.classList.add("open");
-                                    mainContent.classList.remove("hidden");
-                                    
-                                    // Add a flash of gold glow
-                                    const glowFlash = document.createElement("div");
-                                    glowFlash.style.cssText = `
-                                        position: fixed; top: 0; left: 0; 
-                                        width: 100%; height: 100%;
-                                        background: radial-gradient(circle, rgba(212, 175, 55, 0.3), transparent 70%);
-                                        pointer-events: none; z-index: 999;
-                                        animation: glowFade 1s ease forwards;
-                                    `;
-                                    document.body.appendChild(glowFlash);
-                                    setTimeout(() => glowFlash.remove(), 1000);
-                                    
-                                    // Initialize features
-                                    initCountdown();
-                                    initScrollReveal();
-                                    initPetals();
-                                    initCustomMap();
-                                    
-                                    // Auto play music
-                                    bgMusic.play().then(() => {
-                                        musicToggle.classList.add("playing");
-                                    }).catch(() => {});
+                                    // Trigger the full-screen burst of light
+                                    const flash = document.createElement("div");
+                                    flash.className = "reveal-flash";
+                                    document.body.appendChild(flash);
+
+                                    // At the peak of the flash (screen fully white), swap in the site
+                                    setTimeout(() => {
+                                        envelopeWrapper.classList.add("open");
+                                        mainContent.classList.remove("hidden");
+
+                                        // Initialize features while hidden behind the light
+                                        initCountdown();
+                                        initScrollReveal();
+                                        initPetals();
+                                        initCustomMap();
+
+                                        // Auto play music
+                                        bgMusic.play().then(() => {
+                                            musicToggle.classList.add("playing");
+                                        }).catch(() => {});
+                                    }, 360);
+
+                                    // Remove the flash overlay once it has fully faded away
+                                    setTimeout(() => flash.remove(), 1700);
                                 }, 400);
                                 
                             }, 300);
