@@ -577,38 +577,6 @@ body {
     opacity: 0.7;
 }
 
-.rsvp-section { margin: 60px 0; }
-
-.rsvp-card {
-    background: linear-gradient(to bottom, #ffffff, #faf6ee);
-    border: 1px dashed var(--gold-primary);
-    padding: 40px 20px; border-radius: 16px;
-}
-
-.rsvp-card h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem; color: var(--text-dark); margin-bottom: 10px;
-}
-
-.rsvp-card p {
-    font-size: 0.95rem; color: var(--text-muted); margin-bottom: 25px;
-}
-
-.rsvp-actions { display: flex; justify-content: center; gap: 20px; }
-
-.rsvp-btn {
-    padding: 12px 28px; border-radius: 25px;
-    font-size: 0.9rem; border: 1px solid transparent;
-}
-
-.rsvp-btn.attend { background-color: var(--text-dark); color: #fff; }
-.rsvp-btn.attend:hover { background-color: #000; transform: translateY(-2px); }
-
-.rsvp-btn.decline {
-    background-color: transparent; border-color: var(--text-muted); color: var(--text-muted);
-}
-.rsvp-btn.decline:hover { background-color: rgba(0,0,0,0.03); transform: translateY(-2px); }
-
 footer { padding: 60px 20px 40px; }
 
 .quote {
@@ -635,8 +603,6 @@ footer { padding: 60px 20px 40px; }
     .detail-item { padding-left: 2%; }
     .countdown-box { width: 65px; padding: 10px 0; }
     .countdown-box span { font-size: 1.4rem; }
-    .rsvp-actions { flex-direction: column; align-items: center; gap: 12px; }
-    .rsvp-btn { width: 100%; max-width: 240px; }
 
     .envelope-container { width: 100vw; }
     .wax-seal { width: 116px; height: 112px; }

@@ -348,14 +348,3 @@ document.addEventListener("DOMContentLoaded", () => {
         animate();
     }
 });
-
-// ==========================================
-// 7. RSVP ACTION INTERACTION
-// ==========================================
-function handleRSVP(isAttending) {
-    if (isAttending) {
-        alert("Thank you! We look forward to celebrating our special day with you. ✨");
-    } else {
-        alert("Thank you for letting us know. You will be missed dearly! ❤️");
-    }
-}
