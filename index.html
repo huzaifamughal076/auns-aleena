@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Leaflet for Beautiful Custom Map -->
@@ -41,59 +41,33 @@
 
         <div class="envelope-container" id="envelope-container">
             <div class="envelope" id="envelope">
-                <!-- Back paper of the envelope -->
-                <div class="env-paper"></div>
+                <!-- Hidden invitation card (kept for JS hooks) -->
+                <div class="invitation-card" id="invitation-card"></div>
 
-                <!-- Invitation card inside (rises out on open) -->
-                <div class="invitation-card" id="invitation-card">
-                    <div class="card-inner">
-                        <p class="card-line-sub">You are cordially invited</p>
-                        <div class="card-divider"></div>
-                        <p class="card-line-main">Auns <span class="card-heart">&</span> Aleena</p>
-                        <p class="card-line-date">14 November 2026</p>
-                        <div class="card-divider"></div>
-                        <p class="card-line-venue">Le Aura Grand Marquee</p>
-                    </div>
+                <!-- Four envelope flaps that slide apart on open -->
+                <div class="env-panel-wrap wrap-bottom">
+                    <img class="env-panel panel-bottom" src="assets/envelope-flap.png" alt="">
+                </div>
+                <div class="env-panel-wrap wrap-left">
+                    <img class="env-panel panel-left" src="assets/envelope-flap.png" alt="">
+                </div>
+                <div class="env-panel-wrap wrap-right">
+                    <img class="env-panel panel-right" src="assets/envelope-flap.png" alt="">
+                </div>
+                <div class="env-panel-wrap wrap-top" id="env-flap">
+                    <img class="env-panel panel-top" src="assets/envelope-top.png" alt="">
                 </div>
 
-                <!-- Diagonal seams (classic envelope back) -->
-                <div class="env-seam env-left"></div>
-                <div class="env-seam env-right"></div>
-                <div class="env-seam env-bottom"></div>
-
-                <!-- Envelope flap (opens) -->
-                <div class="env-flap" id="env-flap">
-                    <div class="flap-inner"></div>
-                    <span class="flap-monogram">A<span class="mono-amp">&amp;</span>A</span>
-                </div>
-
-                <!-- Satin ribbon beneath the seal -->
-                <div class="env-ribbon" id="env-ribbon">
-                    <div class="ribbon-left"></div>
-                    <div class="ribbon-right"></div>
-                </div>
-
-                <!-- Wax seal -->
-                <div class="wax-seal" id="wax-seal">
-                    <div class="seal-circle">
-                        <span class="seal-text">A&A</span>
-                    </div>
-                    <div class="seal-crack" id="seal-crack"></div>
-                </div>
+                <!-- Gold Bismillah wax seal (tap target) -->
+                <img class="wax-seal" id="wax-seal" src="assets/seal-bismillah.png" alt="Bismillah">
+                <div class="seal-crack" id="seal-crack"></div>
+                <div class="env-ribbon" id="env-ribbon"></div>
             </div>
-            
-            <!-- Floating gold particles (CSS) -->
-            <div class="gp gp1"></div>
-            <div class="gp gp2"></div>
-            <div class="gp gp3"></div>
-            <div class="gp gp4"></div>
-            <div class="gp gp5"></div>
-            <div class="gp gp6"></div>
         </div>
 
         <button id="open-btn" class="btn open-btn">
-            <i class="fas fa-envelope-open-text"></i>
-            <span>Open Invitation</span>
+            <span class="open-text">Appuyez pour ouvrir</span>
+            <img class="open-divider-img" src="assets/line-flower.png" alt="">
         </button>
     </div>
 

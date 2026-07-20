@@ -66,84 +66,43 @@ document.addEventListener("DOMContentLoaded", () => {
         document.head.appendChild(style);
     }
 
-    openBtn.addEventListener("click", () => {
-        // Disable button during animation
+    let invitationOpened = false;
+    function openInvitation() {
+        if (invitationOpened) return;
+        invitationOpened = true;
+
+        // Fade out the prompt, slide the four flaps apart + fade the seal
         openBtn.style.pointerEvents = "none";
         openBtn.style.opacity = "0";
-        openBtn.style.transform = "translateY(20px)";
+        envelope.classList.add("open");
 
-        // STEP 1: Envelope lifts up slightly
-        envelopeContainer.style.animation = "none";
-        envelopeContainer.style.transform = "translateY(-15px) scale(1.02)";
-        
-        // STEP 2: Wax seal cracks (after 300ms)
+        // Once the flaps have mostly parted, burst of light -> reveal details
         setTimeout(() => {
-            sealCrack.classList.add("show");
-            
-            // STEP 3: Seal shrinks away (after crack shows)
+            const flash = document.createElement("div");
+            flash.className = "reveal-flash";
+            document.body.appendChild(flash);
+
+            // At the peak of the flash (screen fully white), swap in the site
             setTimeout(() => {
-                waxSeal.classList.add("crack");
-                
-                // STEP 4: Ribbon slides away (after seal starts shrinking)
-                setTimeout(() => {
-                    ribbon.classList.add("slide-away");
-                    
-                    // STEP 5: Flap opens (after ribbon slides)
-                    setTimeout(() => {
-                        envelope.classList.add("open-flap");
-                        
-                        // STEP 6: Card rises (after flap opens)
-                        setTimeout(() => {
-                            envelope.classList.add("card-rise");
-                            
-                            // STEP 7: Container zooms in slightly + glow
-                            setTimeout(() => {
-                                envelopeContainer.style.transform = "translateY(-15px) scale(1.06)";
-                                envelopeContainer.style.filter = "brightness(1.1)";
-                                
-                                // STEP 8: Background darkens
-                                envelopeWrapper.style.background = "radial-gradient(ellipse at center, #fdfbf7 0%, #e8d5b8 60%, #c4a882 100%)";
-                                
-                                // STEP 9: Bright light engulfs everything, then reveals the details
-                                setTimeout(() => {
-                                    // Trigger the full-screen burst of light
-                                    const flash = document.createElement("div");
-                                    flash.className = "reveal-flash";
-                                    document.body.appendChild(flash);
+                envelopeWrapper.classList.add("open");
+                mainContent.classList.remove("hidden");
 
-                                    // At the peak of the flash (screen fully white), swap in the site
-                                    setTimeout(() => {
-                                        envelopeWrapper.classList.add("open");
-                                        mainContent.classList.remove("hidden");
+                initCountdown();
+                initScrollReveal();
+                initPetals();
+                initCustomMap();
 
-                                        // Initialize features while hidden behind the light
-                                        initCountdown();
-                                        initScrollReveal();
-                                        initPetals();
-                                        initCustomMap();
+                bgMusic.play().then(() => {
+                    musicToggle.classList.add("playing");
+                }).catch(() => {});
+            }, 360);
 
-                                        // Auto play music
-                                        bgMusic.play().then(() => {
-                                            musicToggle.classList.add("playing");
-                                        }).catch(() => {});
-                                    }, 360);
+            setTimeout(() => flash.remove(), 1700);
+        }, 1400);
+    }
 
-                                    // Remove the flash overlay once it has fully faded away
-                                    setTimeout(() => flash.remove(), 1700);
-                                }, 400);
-                                
-                            }, 300);
-                            
-                        }, 500);
-                        
-                    }, 400);
-                    
-                }, 500);
-                
-            }, 400);
-            
-        }, 300);
-    });
+    openBtn.addEventListener("click", openInvitation);
+    if (waxSeal) waxSeal.addEventListener("click", openInvitation);
 
     // ==========================================
     // 3. CUSTOM BEAUTIFUL MAP WITH MARKER
