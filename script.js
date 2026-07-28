@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ribbon = document.getElementById("env-ribbon");
     const invitationCard = document.getElementById("invitation-card");
     const mainContent = document.getElementById("main-content");
-    const bgMusic = document.getElementById("bg-music");
+    const duaRecitation = document.getElementById("dua-recitation");
     const musicToggle = document.getElementById("music-toggle");
     const particlesContainer = document.getElementById("env-particles");
 
@@ -92,9 +92,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 initPetals();
                 initCustomMap();
 
-                bgMusic.play().then(() => {
-                    musicToggle.classList.add("playing");
-                }).catch(() => {});
+                // Play the wedding du'a recitation. Opening happens on a click,
+                // so the browser allows this audio to start with sound.
+                if (duaRecitation) {
+                    duaRecitation.play().then(() => {
+                        musicToggle.classList.add("playing");
+                    }).catch(() => {});
+                }
             }, 360);
 
             setTimeout(() => flash.remove(), 1700);
@@ -221,15 +225,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 4. BACKGROUND MUSIC LOGIC
+    // 4. DU'A RECITATION TOGGLE (mute / unmute)
     // ==========================================
     musicToggle.addEventListener("click", () => {
-        if (bgMusic.paused) {
-            bgMusic.play();
+        if (!duaRecitation) return;
+
+        if (duaRecitation.paused) {
+            duaRecitation.play().catch(() => {});
             musicToggle.classList.add("playing");
             musicToggle.style.color = "var(--gold-dark)";
         } else {
-            bgMusic.pause();
+            duaRecitation.pause();
             musicToggle.classList.remove("playing");
             musicToggle.style.color = "var(--text-muted)";
         }

@@ -414,6 +414,43 @@ body {
 
 .hero { padding: 80px 20px 40px; }
 
+.ayah-block {
+    max-width: 620px;
+    margin: 0 auto 45px;
+    padding: 0 10px;
+}
+
+.ayah-arabic {
+    font-family: 'Amiri', serif;
+    font-weight: 700;
+    direction: rtl;
+    font-size: 1.85rem;
+    line-height: 2.2;
+    color: var(--gold-dark);
+    margin-bottom: 22px;
+}
+
+.ayah-translation {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto 14px;
+}
+
+.ayah-ref {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-primary);
+}
+
+.ayah-block .decorative-divider { margin: 28px auto 0; }
+
 .event-tag {
     font-size: 1.1rem; font-weight: 600;
     letter-spacing: 4px; text-transform: uppercase;
@@ -588,6 +625,34 @@ body {
 
 .rsvp-text a:hover { color: var(--gold-dark); }
 
+.looking-forward-section { margin: 60px 0; }
+
+.looking-forward-card {
+    background: var(--glass-bg);
+    border: 1px solid rgba(214, 175, 55, 0.3);
+    border-radius: 20px; padding: 40px 30px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(10px);
+    position: relative; overflow: hidden;
+    max-width: 480px; margin: 0 auto;
+    text-align: center;
+}
+
+.lf-intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.25rem;
+    color: var(--text-muted); line-height: 1.5;
+    max-width: 340px; margin: 0 auto 28px;
+}
+
+.lf-names { display: flex; flex-direction: column; gap: 16px; }
+
+.lf-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600;
+    color: var(--gold-dark); letter-spacing: 1px;
+}
+
 .location-section { margin: 60px 0; }
 
 .venue-sub {
@@ -647,6 +712,9 @@ footer { padding: 60px 20px 40px; }
 @media (max-width: 600px) {
     .couple-name { font-size: 1.7rem; letter-spacing: 2px; }
     .hero { padding-top: 50px; }
+    .ayah-arabic { font-size: 1.45rem; line-height: 2; }
+    .ayah-translation { font-size: 1.1rem; }
+    .ayah-block { margin-bottom: 35px; }
     .detail-item { padding-left: 2%; }
     .countdown-box { width: 65px; padding: 10px 0; }
     .countdown-box span { font-size: 1.4rem; }
