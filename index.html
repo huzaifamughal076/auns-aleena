@@ -5,15 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Invitation | Auns & Aleena</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts -->
+
+    <!-- Preload the envelope images shown first, so the opening screen paints fast -->
+    <link rel="preload" as="image" href="assets/seal-bismillah.png">
+    <link rel="preload" as="image" href="assets/envelope-top.png">
+    <link rel="preload" as="image" href="assets/envelope-flap.png">
+
+    <!-- Google Fonts (loaded non-render-blocking so text shows immediately) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Premium Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Leaflet for Beautiful Custom Map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" media="print" onload="this.media='all'"
+          href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap">
+    <!-- FontAwesome for Premium Icons (non-render-blocking; icons appear after open) -->
+    <link rel="stylesheet" media="print" onload="this.media='all'"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+    <!-- Leaflet map assets are loaded lazily from script.js only when the invitation opens -->
 </head>
 <body>
 
@@ -31,7 +41,7 @@
         <i class="fas fa-music"></i>
     </button>
     <!-- Wedding du'a recitation (Sunnah supplication) — plays once when the invitation opens -->
-    <audio id="dua-recitation" preload="auto" src="assets/holy-tune.mp3"></audio>
+    <audio id="dua-recitation" preload="none" src="assets/holy-tune.mp3"></audio>
 
     <!-- 2. Envelope Opening System -->
     <div id="envelope-wrapper" class="envelope-wrapper">

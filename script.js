@@ -4,12 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // 1. LOADING SCREEN CONTROLLER
     // ==========================================
     const loader = document.getElementById("loader");
-    window.addEventListener("load", () => {
-        setTimeout(() => {
-            loader.style.opacity = "0";
-            setTimeout(() => loader.style.display = "none", 500);
-        }, 800);
-    });
+    let loaderHidden = false;
+    function hideLoader() {
+        if (loaderHidden) return;
+        loaderHidden = true;
+        loader.style.opacity = "0";
+        setTimeout(() => loader.style.display = "none", 500);
+    }
+
+    // Hide the loader as soon as the envelope images (the only thing shown first)
+    // have loaded — don't wait on fonts, the map, or the audio. A safety timeout
+    // guarantees the invitation is never stuck behind the loader on slow networks.
+    const criticalImgs = Array.from(document.querySelectorAll(".env-panel, .wax-seal"));
+    Promise.all(criticalImgs.map(img =>
+        img.complete ? Promise.resolve() : new Promise(res => {
+            img.addEventListener("load", res, { once: true });
+            img.addEventListener("error", res, { once: true });
+        })
+    )).then(hideLoader);
+    setTimeout(hideLoader, 4000);
 
     // ==========================================
     // 2. ENVELOPE OPENING CINEMATIC SEQUENCE
@@ -111,10 +124,32 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     // 3. CUSTOM BEAUTIFUL MAP WITH MARKER
     // ==========================================
+    // Load Leaflet (CSS + JS) on demand — only when the map is actually shown.
+    // Cached so it is fetched at most once.
+    function loadLeaflet() {
+        if (window._leafletPromise) return window._leafletPromise;
+        window._leafletPromise = new Promise((resolve, reject) => {
+            if (window.L) return resolve();
+            const css = document.createElement("link");
+            css.rel = "stylesheet";
+            css.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+            document.head.appendChild(css);
+            const js = document.createElement("script");
+            js.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+            js.onload = resolve;
+            js.onerror = reject;
+            document.head.appendChild(js);
+        });
+        return window._leafletPromise;
+    }
+
     function initCustomMap() {
         const mapContainer = document.getElementById("custom-map");
         if (!mapContainer) return;
+        loadLeaflet().then(() => buildCustomMap(mapContainer)).catch(() => {});
+    }
 
+    function buildCustomMap(mapContainer) {
         // Coordinates for Le Aura Grand Marquee, Lahore
         const lat = 31.4815197;
         const lng = 74.4011883;
