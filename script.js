@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
         loaderHidden = true;
         loader.style.opacity = "0";
         setTimeout(() => loader.style.display = "none", 500);
-        // Envelope is now on screen — begin the ayah recitation intro
-        if (typeof playRecitation === "function") playRecitation();
     }
 
     // Hide the loader as soon as the envelope images (the only thing shown first)
@@ -84,41 +82,25 @@ document.addEventListener("DOMContentLoaded", () => {
     let invitationOpened = false;
     function openInvitation() {
         if (invitationOpened) return;
-        // Don't allow opening until the ayah recitation has finished (or been skipped)
-        if (!recitationComplete) return;
         invitationOpened = true;
-
-        // Stop the ayah recitation if it is somehow still playing
-        if (ayahRecitation) ayahRecitation.pause();
 
         // Fade out the prompt, slide the four flaps apart + fade the seal
         openBtn.style.pointerEvents = "none";
         openBtn.style.opacity = "0";
         envelope.classList.add("open");
 
-        // Once the flaps have mostly parted, burst of light -> reveal details
+        // Once the flaps have mostly parted, burst of light -> reveal the ayah screen
         setTimeout(() => {
             const flash = document.createElement("div");
             flash.className = "reveal-flash";
             document.body.appendChild(flash);
 
-            // At the peak of the flash (screen fully white), swap in the site
+            // At the peak of the flash (screen fully white), reveal the ayah screen
+            // and start the recitation. The tap that opened the envelope has already
+            // unlocked audio, so the recitation is free to auto-play with sound.
             setTimeout(() => {
                 envelopeWrapper.classList.add("open");
-                mainContent.classList.remove("hidden");
-
-                initCountdown();
-                initScrollReveal();
-                initPetals();
-                initCustomMap();
-
-                // Play the wedding du'a recitation. Opening happens on a click,
-                // so the browser allows this audio to start with sound.
-                if (duaRecitation) {
-                    duaRecitation.play().then(() => {
-                        musicToggle.classList.add("playing");
-                    }).catch(() => {});
-                }
+                showAyahScreen();
             }, 360);
 
             setTimeout(() => flash.remove(), 1700);
@@ -129,13 +111,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (waxSeal) waxSeal.addEventListener("click", openInvitation);
 
     // ==========================================
-    // 2b. AYAH RECITATION INTRO + WORD-BY-WORD SYNC
+    // 2b. AYAH RECITATION SCREEN + WORD-BY-WORD SYNC
     // ==========================================
     const envAyah = document.getElementById("env-ayah");
     const ayahRecitation = document.getElementById("ayah-recitation");
     const ayahArabic = document.getElementById("ayah-arabic");
     const ayahSkip = document.getElementById("ayah-skip");
-    let recitationComplete = false;
 
     // Split the ayah into individual words so each can be highlighted as it is recited
     let wordEls = [];
@@ -160,56 +141,74 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Called when the recitation ends naturally OR the user taps "Skip".
-    // Reveals the "Open Invitation" prompt and dismisses the ayah overlay.
-    function finishRecitation() {
-        if (recitationComplete) return;
-        recitationComplete = true;
-        if (ayahRecitation) ayahRecitation.pause();
-        wordEls.forEach(el => { el.classList.add("spoken"); el.classList.remove("active"); });
-
-        if (envAyah) {
-            envAyah.classList.add("hide");
-            setTimeout(() => { envAyah.style.display = "none"; }, 1000);
+    // Reveal the ayah screen and auto-play the recitation. Called at the peak of
+    // the envelope-open flash — audio is already unlocked by that opening tap.
+    function showAyahScreen() {
+        if (!envAyah) { goToMainContent(); return; }
+        envAyah.classList.add("active");
+        if (ayahRecitation) {
+            const attempt = ayahRecitation.play();
+            if (attempt && typeof attempt.catch === "function") attempt.catch(() => {});
         }
-        openBtn.classList.add("show");
-        setTimeout(() => openBtn.classList.add("pulse"), 800);
     }
 
-    // Start (or resume) the recitation. Browsers block audio-with-sound before a
-    // user gesture, so if playback is refused we show a "tap to begin" prompt and
-    // try again on the first tap anywhere on the overlay. Safe to call repeatedly.
-    function playRecitation() {
-        if (!ayahRecitation || recitationComplete) return;
-        const markPlaying = () => {
-            if (envAyah) { envAyah.classList.add("playing"); envAyah.classList.remove("need-tap"); }
+    // Advance from the ayah screen to the main invitation. Runs when the audio
+    // finishes on its own OR the user taps "Skip & Continue". Either way, any
+    // playing recitation is stopped first, then the main content is revealed.
+    let mainShown = false;
+    function goToMainContent() {
+        if (mainShown) return;
+        mainShown = true;
+
+        if (ayahRecitation) ayahRecitation.pause();
+
+        if (envAyah) {
+            envAyah.classList.remove("active");
+            envAyah.classList.add("leaving");
+            setTimeout(() => { envAyah.style.display = "none"; }, 1100);
+        }
+
+        mainContent.classList.remove("hidden");
+        initCountdown();
+        initScrollReveal();
+        initPetals();
+        initCustomMap();
+
+        // The wedding song fades in 2 seconds after landing on the main invitation
+        setTimeout(() => fadeInAudio(duaRecitation, 2600), 2000);
+    }
+
+    // Play an audio element while ramping its volume from 0 to full — a gentle fade-in.
+    function fadeInAudio(audio, durationMs) {
+        if (!audio) return;
+        const steps = 40;
+        const stepTime = Math.max(durationMs / steps, 20);
+        audio.volume = 0;
+        const startRamp = () => {
+            musicToggle.classList.add("playing");
+            let i = 0;
+            const timer = setInterval(() => {
+                i++;
+                audio.volume = Math.min(i / steps, 1);
+                if (i >= steps) clearInterval(timer);
+            }, stepTime);
         };
-        const attempt = ayahRecitation.play();
+        const attempt = audio.play();
         if (attempt && typeof attempt.then === "function") {
-            attempt.then(markPlaying).catch(() => {
-                // Autoplay blocked — wait for a tap
-                if (envAyah) envAyah.classList.add("need-tap");
-            });
+            attempt.then(startRamp).catch(() => { audio.volume = 1; });
         } else {
-            markPlaying();
+            startRamp();
         }
     }
 
     if (ayahRecitation) {
         ayahRecitation.addEventListener("timeupdate", syncAyah);
-        ayahRecitation.addEventListener("ended", finishRecitation);
+        ayahRecitation.addEventListener("ended", goToMainContent);
     }
     if (ayahSkip) {
         ayahSkip.addEventListener("click", (e) => {
             e.stopPropagation();
-            finishRecitation();
-        });
-    }
-    // Tap anywhere on the overlay to begin/resume when autoplay was blocked
-    if (envAyah) {
-        envAyah.addEventListener("click", () => {
-            if (recitationComplete) return;
-            if (ayahRecitation && ayahRecitation.paused) playRecitation();
+            goToMainContent();
         });
     }
 

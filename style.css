@@ -314,7 +314,7 @@ body {
     75% { transform: translateY(-12px) scale(1.1); opacity: 0.5; }
 }
 
-/* "Tap to open" prompt — hidden until the ayah recitation has finished / been skipped */
+/* "Tap to open" prompt — visible on the envelope screen from the start */
 .open-btn {
     position: absolute;
     top: 61%; left: 50%;
@@ -324,13 +324,8 @@ body {
     z-index: 10;
     display: flex; flex-direction: column; align-items: center; gap: 16px;
     text-transform: none; letter-spacing: normal;
-    opacity: 0;
-    pointer-events: none;
+    animation: promptPulse 2.8s ease-in-out infinite;
 }
-
-/* Revealed after the recitation: fade in first, then begin the gentle pulse */
-.open-btn.show { opacity: 1; pointer-events: auto; }
-.open-btn.pulse { animation: promptPulse 2.8s ease-in-out infinite; }
 
 .open-text {
     font-family: 'Cormorant Garamond', serif;
@@ -350,30 +345,32 @@ body {
 .open-btn:hover .open-text { color: #7d5f28; }
 
 /* ==========================================
-   4b. AYAH RECITATION INTRO (over the envelope)
+   4b. AYAH RECITATION SCREEN (after the envelope opens)
    ========================================== */
 .env-ayah {
-    position: absolute; inset: 0;
-    z-index: 20;
-    display: flex; align-items: center; justify-content: center;
+    position: fixed; inset: 0;
+    z-index: 1100;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     padding: 34px 26px;
     background:
         radial-gradient(ellipse at 50% 42%, #ffffff 0%, #fbf7f0 55%, #f3ebdd 100%);
-    opacity: 1;
-    transition: opacity 1s ease;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease, visibility 1s ease;
 }
-.env-ayah.hide { opacity: 0; pointer-events: none; }
+/* Shown after the envelope is opened */
+.env-ayah.active { opacity: 1; visibility: visible; }
+/* Fading back out on the way to the main invitation */
+.env-ayah.leaving { opacity: 0; visibility: hidden; }
 
 .env-ayah-inner {
     max-width: 580px; width: 100%;
     text-align: center;
-    animation: ayahFadeUp 1.1s cubic-bezier(0.25, 1, 0.5, 1) both;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 1s ease 0.15s, transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.15s;
 }
-
-@keyframes ayahFadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
+.env-ayah.active .env-ayah-inner { opacity: 1; transform: translateY(0); }
 
 .env-ayah-flourish {
     width: 150px; height: auto;
@@ -395,39 +392,49 @@ body {
     text-shadow: 0 0 16px rgba(212, 175, 55, 0.6);
 }
 
-/* Translation + reference gently appear once recitation is playing */
-.env-ayah .ayah-translation { opacity: 0; transition: opacity 1.4s ease; }
-.env-ayah .ayah-ref { opacity: 0; transition: opacity 1.4s ease 0.2s; }
-.env-ayah.playing .ayah-translation,
-.env-ayah.playing .ayah-ref { opacity: 1; }
+/* Translation + reference gently appear once the screen is shown */
+.env-ayah .ayah-translation { opacity: 0; transition: opacity 1.4s ease 0.5s; }
+.env-ayah .ayah-ref { opacity: 0; transition: opacity 1.4s ease 0.7s; }
+.env-ayah.active .ayah-translation,
+.env-ayah.active .ayah-ref { opacity: 1; }
 
-/* User control to stop the recitation early */
-.ayah-skip {
-    margin-top: 30px;
-    background: none; border: none; cursor: pointer;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem; letter-spacing: 1px;
-    color: var(--text-muted); opacity: 0.65;
-    transition: opacity 0.3s ease, color 0.3s ease;
+/* Beautiful "Skip & Continue" button pinned near the bottom */
+.ayah-continue-btn {
+    position: absolute;
+    bottom: 7%; left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 14px 34px;
+    border: 1px solid var(--gold-primary);
+    border-radius: 40px;
+    background: rgba(253, 251, 247, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: var(--gold-dark);
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 2px; text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(170, 124, 17, 0.15);
+    opacity: 0;
+    transition: opacity 1s ease 0.9s, background 0.4s ease, color 0.4s ease,
+                box-shadow 0.4s ease, transform 0.4s ease;
+    animation: continueGlow 3s ease-in-out infinite 2s;
 }
-.ayah-skip:hover { opacity: 1; color: var(--gold-dark); }
+.env-ayah.active .ayah-continue-btn { opacity: 1; }
+.ayah-continue-btn i { font-size: 0.8rem; transition: transform 0.4s ease; }
+.ayah-continue-btn:hover {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary), var(--gold-dark));
+    color: #fff;
+    box-shadow: 0 8px 26px rgba(170, 124, 17, 0.4), 0 0 12px rgba(212, 175, 55, 0.4);
+}
+.ayah-continue-btn:hover i { transform: translateX(5px); }
 
-/* Shown instead of Skip when the browser blocks autoplay */
-.ayah-begin-hint {
-    margin-top: 22px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem; color: var(--gold-dark);
-    letter-spacing: 0.5px;
-    animation: hintPulse 2.4s ease-in-out infinite;
-    display: none;
+@keyframes continueGlow {
+    0%, 100% { box-shadow: 0 6px 20px rgba(170, 124, 17, 0.15); }
+    50%      { box-shadow: 0 6px 24px rgba(212, 175, 55, 0.4); }
 }
-
-@keyframes hintPulse {
-    0%, 100% { opacity: 0.7; transform: translateY(0); }
-    50%      { opacity: 1; transform: translateY(-3px); }
-}
-.env-ayah.need-tap .ayah-begin-hint { display: block; }
-.env-ayah.need-tap .ayah-skip { display: none; }
 
 /* Envelope zoom + fade transition */
 .envelope-wrapper.open {
