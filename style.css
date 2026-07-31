@@ -6,8 +6,9 @@
     --gold-primary: #D4AF37;
     --gold-light: #F3E5AB;
     --gold-dark: #AA7C11;
-    --text-dark: #2C2A29;
-    --text-muted: #5C5856;
+    /* Text is light gold across the invitation (was near-black / grey) */
+    --text-dark: #BE9226;
+    --text-muted: #C9A24B;
     --glass-bg: rgba(253, 251, 247, 0.85);
     --glass-shadow: 0 15px 35px rgba(170, 124, 17, 0.15);
     --transition-smooth: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
@@ -695,48 +696,61 @@ body {
 .ayah-block .decorative-divider { margin: 28px auto 0; }
 
 .event-tag {
-    font-size: 1.1rem; font-weight: 600;
-    letter-spacing: 4px; text-transform: uppercase;
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.4rem; font-weight: 400;
+    letter-spacing: 2px; text-transform: none;
     display: block; margin-bottom: 25px;
 }
 
 .couple-name {
-    font-family: 'Cinzel', serif;
-    font-size: 2.7rem; color: var(--text-dark);
-    font-weight: 600; line-height: 1.35;
-    letter-spacing: 3px; text-transform: uppercase;
+    font-family: 'Great Vibes', cursive;
+    font-size: 4.2rem;
+    font-weight: 400; line-height: 1.15;
+    letter-spacing: 1px; text-transform: none;
+    /* Metallic gold gradient text */
+    background: linear-gradient(180deg, #F0D786 0%, #D4AF37 42%, #B8860B 72%, #9A6E12 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--gold-dark); /* fallback for browsers without background-clip:text */
+    filter: drop-shadow(0 2px 4px rgba(170, 124, 17, 0.25));
 }
 
 .host-line {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem; font-weight: 600;
-    color: var(--gold-dark); letter-spacing: 1px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 500;
+    color: var(--gold-dark); letter-spacing: 0.5px;
     line-height: 1.5; margin-bottom: 30px;
 }
 
 .host-line-sub {
     display: block;
+    font-family: 'Playfair Display', serif;
     font-size: 1.15rem; font-weight: 400; font-style: italic;
-    color: var(--text-muted); letter-spacing: 0.5px;
+    color: #B5851C; letter-spacing: 0.3px;
     max-width: 480px; margin: 8px auto 0;
 }
 
-.heart-icon-wrap { margin: 15px 0; }
+.couple-amp-wrap { margin: 6px 0; line-height: 1; }
 
-.heart-pulse {
-    color: #c92a2a; font-size: 1.5rem;
-    animation: heartPulse 1.4s infinite ease-in-out;
-}
-
-@keyframes heartPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.25); }
+/* Golden "&" in the same calligraphy script as the couple names */
+.couple-amp {
+    display: inline-block;
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.4rem; line-height: 1;
+    background: linear-gradient(180deg, #F0D786 0%, #D4AF37 42%, #B8860B 72%, #9A6E12 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--gold-dark); /* fallback for browsers without background-clip:text */
+    filter: drop-shadow(0 2px 4px rgba(170, 124, 17, 0.25));
 }
 
 .invitation-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic; font-size: 1.4rem;
-    color: var(--text-muted);
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-weight: 400; letter-spacing: 0.3px;
+    font-size: 1.3rem;
+    color: #B5851C;
     max-width: 500px; margin: 30px auto; line-height: 1.6;
 }
 
@@ -797,12 +811,14 @@ body {
 }
 
 .detail-text p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.25rem; font-weight: 600; color: var(--text-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.12rem; font-weight: 400; font-style: italic; letter-spacing: 0.3px;
+    color: #B5851C;
 }
 
 .detail-text .detail-sub {
-    font-size: 1rem; font-weight: 400; font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 400; font-style: italic; letter-spacing: 0;
     color: var(--text-muted); margin-top: 1px;
 }
 
@@ -860,13 +876,13 @@ body {
 }
 
 .rsvp-text a {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.25rem; font-weight: 600; color: var(--text-dark);
-    text-decoration: none; letter-spacing: 1px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 400; font-style: italic; color: #B5851C;
+    text-decoration: none; letter-spacing: 0.3px;
     transition: color 0.3s ease;
 }
 
-.rsvp-text a:hover { color: var(--gold-dark); }
+.rsvp-text a:hover { color: #8A6410; }
 
 .looking-forward-section { margin: 60px 0; }
 
@@ -882,10 +898,11 @@ body {
 }
 
 .lf-intro {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic; font-size: 1.25rem;
-    color: var(--text-muted); line-height: 1.5;
-    max-width: 340px; margin: 0 auto 28px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-weight: 400; letter-spacing: 0.3px;
+    font-size: 1.2rem;
+    color: #B5851C; line-height: 1.55;
+    max-width: 360px; margin: 0 auto 28px;
 }
 
 .lf-names { display: flex; flex-direction: column; gap: 16px; }
@@ -899,7 +916,9 @@ body {
 .location-section { margin: 60px 0; }
 
 .venue-sub {
-    font-size: 1.1rem; color: var(--text-muted); margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-weight: 400; letter-spacing: 0.3px;
+    font-size: 1.15rem; color: #B5851C; margin-bottom: 20px;
 }
 
 .map-frame {
@@ -945,15 +964,17 @@ footer { padding: 60px 20px 40px; }
 }
 
 .closing {
-    font-size: 0.9rem; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--text-muted);
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-weight: 400; letter-spacing: 0.3px;
+    font-size: 1.15rem; text-transform: none; color: #B5851C;
+    line-height: 1.5;
 }
 
 /* ==========================================
    7. MOBILE
    ========================================== */
 @media (max-width: 600px) {
-    .couple-name { font-size: 1.7rem; letter-spacing: 2px; }
+    .couple-name { font-size: 3.1rem; letter-spacing: 0.5px; }
     .hero { padding-top: 50px; }
     .ayah-arabic { font-size: 1.45rem; line-height: 2; }
     .ayah-translation { font-size: 1.1rem; }
