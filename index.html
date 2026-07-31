@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Invitation | Auns & Aleena</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=4">
 
     <!-- Preload the envelope images shown first, so the opening screen paints fast -->
     <link rel="preload" as="image" href="assets/seal-bismillah.png">
@@ -42,6 +42,8 @@
     </button>
     <!-- Wedding du'a recitation (Sunnah supplication) — plays once when the invitation opens -->
     <audio id="dua-recitation" preload="none" src="assets/holy-tune.mp3"></audio>
+    <!-- Qur'anic ayah recitation (Surah Ar-Rum 30:21) — plays on the envelope screen before opening -->
+    <audio id="ayah-recitation" preload="auto" src="assets/surah_ar_rum_21.mp3"></audio>
 
     <!-- 2. Envelope Opening System -->
     <div id="envelope-wrapper" class="envelope-wrapper">
@@ -75,6 +77,20 @@
             </div>
         </div>
 
+        <!-- Ayah recitation intro — recited over the envelope before it opens.
+             The "Open Invitation" button stays hidden until this finishes or is skipped. -->
+        <div id="env-ayah" class="env-ayah">
+            <div class="env-ayah-inner">
+                <img class="env-ayah-flourish" src="assets/line-flower.png" alt="">
+                <p class="ayah-arabic" id="ayah-arabic">وَمِنْ ءَايَـٰتِهِۦٓ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَٰجًۭا لِّتَسْكُنُوٓا۟ إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةًۭ وَرَحْمَةً ۚ إِنَّ فِى ذَٰلِكَ لَـَٔايَـٰتٍۢ لِّقَوْمٍۢ يَتَفَكَّرُونَ</p>
+                <p class="ayah-translation">"And one of His signs is that He created for you spouses from among yourselves so that you may find comfort in them. And He has placed between you compassion and mercy. Surely in this are signs for people who reflect."</p>
+                <span class="ayah-ref">Surah Ar-Rum · 30:21</span>
+                <img class="env-ayah-flourish env-ayah-flourish-flip" src="assets/line-flower.png" alt="">
+                <button type="button" id="ayah-skip" class="ayah-skip">Skip Recitation &rsaquo;</button>
+                <div id="ayah-begin" class="ayah-begin-hint">Tap anywhere to begin the recitation</div>
+            </div>
+        </div>
+
         <button id="open-btn" class="btn open-btn">
             <span class="open-text">Open Invitation</span>
             <img class="open-divider-img" src="assets/line-flower.png" alt="">
@@ -93,14 +109,6 @@
         <!-- Hero Section -->
         <section class="hero reveal">
             <div class="hero-inner">
-                <!-- Quranic Ayah — Surah Ar-Rum 30:21 -->
-                <div class="ayah-block">
-                    <p class="ayah-arabic">وَمِنْ ءَايَـٰتِهِۦٓ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَٰجًۭا لِّتَسْكُنُوٓا۟ إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةًۭ وَرَحْمَةً ۚ إِنَّ فِى ذَٰلِكَ لَـَٔايَـٰتٍۢ لِّقَوْمٍۢ يَتَفَكَّرُونَ</p>
-                    <p class="ayah-translation">"And one of His signs is that He created for you spouses from among yourselves so that you may find comfort in them. And He has placed between you compassion and mercy. Surely in this are signs for people who reflect."</p>
-                    <span class="ayah-ref">Surah Ar-Rum · 30:21</span>
-                    <div class="decorative-divider"></div>
-                </div>
-
                 <span class="event-tag gold-shimmer">Shalima Event</span>
 
                 <p class="host-line">
@@ -257,6 +265,6 @@
         </footer>
     </main>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=4"></script>
 </body>
 </html>

@@ -314,7 +314,7 @@ body {
     75% { transform: translateY(-12px) scale(1.1); opacity: 0.5; }
 }
 
-/* "Tap to open" prompt */
+/* "Tap to open" prompt — hidden until the ayah recitation has finished / been skipped */
 .open-btn {
     position: absolute;
     top: 61%; left: 50%;
@@ -324,8 +324,13 @@ body {
     z-index: 10;
     display: flex; flex-direction: column; align-items: center; gap: 16px;
     text-transform: none; letter-spacing: normal;
-    animation: promptPulse 2.8s ease-in-out infinite;
+    opacity: 0;
+    pointer-events: none;
 }
+
+/* Revealed after the recitation: fade in first, then begin the gentle pulse */
+.open-btn.show { opacity: 1; pointer-events: auto; }
+.open-btn.pulse { animation: promptPulse 2.8s ease-in-out infinite; }
 
 .open-text {
     font-family: 'Cormorant Garamond', serif;
@@ -341,8 +346,88 @@ body {
     50% { opacity: 1; transform: translateX(-50%) translateY(-3px); }
 }
 
-.open-btn { transition: opacity 0.6s ease; }
+.open-btn { transition: opacity 0.8s ease; }
 .open-btn:hover .open-text { color: #7d5f28; }
+
+/* ==========================================
+   4b. AYAH RECITATION INTRO (over the envelope)
+   ========================================== */
+.env-ayah {
+    position: absolute; inset: 0;
+    z-index: 20;
+    display: flex; align-items: center; justify-content: center;
+    padding: 34px 26px;
+    background:
+        radial-gradient(ellipse at 50% 42%, #ffffff 0%, #fbf7f0 55%, #f3ebdd 100%);
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+.env-ayah.hide { opacity: 0; pointer-events: none; }
+
+.env-ayah-inner {
+    max-width: 580px; width: 100%;
+    text-align: center;
+    animation: ayahFadeUp 1.1s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+@keyframes ayahFadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.env-ayah-flourish {
+    width: 150px; height: auto;
+    opacity: 0.8;
+    -webkit-user-drag: none;
+    display: block; margin: 0 auto 26px;
+}
+.env-ayah-flourish-flip { transform: rotate(180deg); margin: 26px auto 0; }
+
+/* Per-word karaoke highlight of the Arabic ayah */
+.env-ayah .ayah-arabic { margin-bottom: 24px; }
+.ayah-word {
+    color: rgba(170, 124, 17, 0.28);
+    transition: color 0.35s ease, text-shadow 0.35s ease;
+}
+.ayah-word.spoken { color: var(--gold-dark); }
+.ayah-word.active {
+    color: var(--gold-primary);
+    text-shadow: 0 0 16px rgba(212, 175, 55, 0.6);
+}
+
+/* Translation + reference gently appear once recitation is playing */
+.env-ayah .ayah-translation { opacity: 0; transition: opacity 1.4s ease; }
+.env-ayah .ayah-ref { opacity: 0; transition: opacity 1.4s ease 0.2s; }
+.env-ayah.playing .ayah-translation,
+.env-ayah.playing .ayah-ref { opacity: 1; }
+
+/* User control to stop the recitation early */
+.ayah-skip {
+    margin-top: 30px;
+    background: none; border: none; cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; letter-spacing: 1px;
+    color: var(--text-muted); opacity: 0.65;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+.ayah-skip:hover { opacity: 1; color: var(--gold-dark); }
+
+/* Shown instead of Skip when the browser blocks autoplay */
+.ayah-begin-hint {
+    margin-top: 22px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: var(--gold-dark);
+    letter-spacing: 0.5px;
+    animation: hintPulse 2.4s ease-in-out infinite;
+    display: none;
+}
+
+@keyframes hintPulse {
+    0%, 100% { opacity: 0.7; transform: translateY(0); }
+    50%      { opacity: 1; transform: translateY(-3px); }
+}
+.env-ayah.need-tap .ayah-begin-hint { display: block; }
+.env-ayah.need-tap .ayah-skip { display: none; }
 
 /* Envelope zoom + fade transition */
 .envelope-wrapper.open {

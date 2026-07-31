@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
         loaderHidden = true;
         loader.style.opacity = "0";
         setTimeout(() => loader.style.display = "none", 500);
+        // Envelope is now on screen — begin the ayah recitation intro
+        if (typeof playRecitation === "function") playRecitation();
     }
 
     // Hide the loader as soon as the envelope images (the only thing shown first)
@@ -82,7 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let invitationOpened = false;
     function openInvitation() {
         if (invitationOpened) return;
+        // Don't allow opening until the ayah recitation has finished (or been skipped)
+        if (!recitationComplete) return;
         invitationOpened = true;
+
+        // Stop the ayah recitation if it is somehow still playing
+        if (ayahRecitation) ayahRecitation.pause();
 
         // Fade out the prompt, slide the four flaps apart + fade the seal
         openBtn.style.pointerEvents = "none";
@@ -120,6 +127,91 @@ document.addEventListener("DOMContentLoaded", () => {
 
     openBtn.addEventListener("click", openInvitation);
     if (waxSeal) waxSeal.addEventListener("click", openInvitation);
+
+    // ==========================================
+    // 2b. AYAH RECITATION INTRO + WORD-BY-WORD SYNC
+    // ==========================================
+    const envAyah = document.getElementById("env-ayah");
+    const ayahRecitation = document.getElementById("ayah-recitation");
+    const ayahArabic = document.getElementById("ayah-arabic");
+    const ayahSkip = document.getElementById("ayah-skip");
+    let recitationComplete = false;
+
+    // Split the ayah into individual words so each can be highlighted as it is recited
+    let wordEls = [];
+    if (ayahArabic) {
+        const words = ayahArabic.textContent.trim().split(/\s+/);
+        ayahArabic.innerHTML = words
+            .map(w => `<span class="ayah-word">${w}</span>`)
+            .join(" ");
+        wordEls = Array.from(ayahArabic.querySelectorAll(".ayah-word"));
+    }
+
+    // Karaoke-style highlight: advance the "active" word in step with playback.
+    // Timing is derived from the audio's own duration, so it stays in sync
+    // regardless of the exact length of the recitation file.
+    function syncAyah() {
+        if (!ayahRecitation || !ayahRecitation.duration || !wordEls.length) return;
+        const frac = Math.min(ayahRecitation.currentTime / ayahRecitation.duration, 1);
+        const idx = Math.min(Math.floor(frac * wordEls.length), wordEls.length - 1);
+        wordEls.forEach((el, i) => {
+            el.classList.toggle("spoken", i < idx);
+            el.classList.toggle("active", i === idx);
+        });
+    }
+
+    // Called when the recitation ends naturally OR the user taps "Skip".
+    // Reveals the "Open Invitation" prompt and dismisses the ayah overlay.
+    function finishRecitation() {
+        if (recitationComplete) return;
+        recitationComplete = true;
+        if (ayahRecitation) ayahRecitation.pause();
+        wordEls.forEach(el => { el.classList.add("spoken"); el.classList.remove("active"); });
+
+        if (envAyah) {
+            envAyah.classList.add("hide");
+            setTimeout(() => { envAyah.style.display = "none"; }, 1000);
+        }
+        openBtn.classList.add("show");
+        setTimeout(() => openBtn.classList.add("pulse"), 800);
+    }
+
+    // Start (or resume) the recitation. Browsers block audio-with-sound before a
+    // user gesture, so if playback is refused we show a "tap to begin" prompt and
+    // try again on the first tap anywhere on the overlay. Safe to call repeatedly.
+    function playRecitation() {
+        if (!ayahRecitation || recitationComplete) return;
+        const markPlaying = () => {
+            if (envAyah) { envAyah.classList.add("playing"); envAyah.classList.remove("need-tap"); }
+        };
+        const attempt = ayahRecitation.play();
+        if (attempt && typeof attempt.then === "function") {
+            attempt.then(markPlaying).catch(() => {
+                // Autoplay blocked — wait for a tap
+                if (envAyah) envAyah.classList.add("need-tap");
+            });
+        } else {
+            markPlaying();
+        }
+    }
+
+    if (ayahRecitation) {
+        ayahRecitation.addEventListener("timeupdate", syncAyah);
+        ayahRecitation.addEventListener("ended", finishRecitation);
+    }
+    if (ayahSkip) {
+        ayahSkip.addEventListener("click", (e) => {
+            e.stopPropagation();
+            finishRecitation();
+        });
+    }
+    // Tap anywhere on the overlay to begin/resume when autoplay was blocked
+    if (envAyah) {
+        envAyah.addEventListener("click", () => {
+            if (recitationComplete) return;
+            if (ayahRecitation && ayahRecitation.paused) playRecitation();
+        });
+    }
 
     // ==========================================
     // 3. CUSTOM BEAUTIFUL MAP WITH MARKER
