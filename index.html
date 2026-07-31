@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Invitation | Auns & Aleena</title>
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=8">
 
     <!-- Preload the envelope images shown first, so the opening screen paints fast -->
     <link rel="preload" as="image" href="assets/seal-bismillah.png">
@@ -87,17 +87,90 @@
          main invitation. The recitation auto-plays; the "Skip & Continue" button (and a
          natural end of the audio) both advance to the main content. -->
     <div id="env-ayah" class="env-ayah">
-        <div class="env-ayah-inner">
-            <img class="env-ayah-flourish" src="assets/line-flower.png" alt="">
-            <p class="ayah-arabic" id="ayah-arabic">وَمِنْ ءَايَـٰتِهِۦٓ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَٰجًۭا لِّتَسْكُنُوٓا۟ إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةًۭ وَرَحْمَةً ۚ إِنَّ فِى ذَٰلِكَ لَـَٔايَـٰتٍۢ لِّقَوْمٍۢ يَتَفَكَّرُونَ</p>
-            <p class="ayah-translation">"And one of His signs is that He created for you spouses from among yourselves so that you may find comfort in them. And He has placed between you compassion and mercy. Surely in this are signs for people who reflect."</p>
-            <span class="ayah-ref">Surah Ar-Rum · 30:21</span>
-            <img class="env-ayah-flourish env-ayah-flourish-flip" src="assets/line-flower.png" alt="">
+        <!-- Ambient background layers -->
+        <div class="ayah-bg-pattern"></div>
+        <div class="ayah-bg-mosque"></div>
+        <div class="ayah-bg-sparkles"></div>
+
+        <!-- Ornate gold frame with corner jewels -->
+        <div class="ayah-frame">
+            <span class="ayah-frame-corner c-tl"></span>
+            <span class="ayah-frame-corner c-tr"></span>
+            <span class="ayah-frame-corner c-bl"></span>
+            <span class="ayah-frame-corner c-br"></span>
         </div>
-        <button type="button" id="ayah-skip" class="ayah-continue-btn">
-            <span class="ayah-continue-text">Skip &amp; Continue</span>
-            <i class="fas fa-arrow-right"></i>
-        </button>
+
+        <div class="env-ayah-inner">
+            <!-- Emblem: the Qur'an within a mihrab arch, crescent above -->
+            <div class="ayah-emblem">
+                <span class="ayah-emblem-finial"></span>
+                <div class="ayah-emblem-arch">
+                    <i class="fas fa-star-and-crescent ayah-emblem-crescent"></i>
+                    <i class="fas fa-book-quran ayah-emblem-book"></i>
+                </div>
+            </div>
+
+            <!-- Top divider ornament -->
+            <span class="ayah-ornament ayah-ornament-top">
+                <svg viewBox="0 0 220 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M6 8 H84" stroke="currentColor" stroke-width="1"/>
+                    <path d="M136 8 H214" stroke="currentColor" stroke-width="1"/>
+                    <path d="M84 8 q5 -7 10 0" stroke="currentColor" stroke-width="1"/>
+                    <path d="M136 8 q-5 -7 -10 0" stroke="currentColor" stroke-width="1"/>
+                    <circle cx="98" cy="8" r="1.8" fill="currentColor"/>
+                    <circle cx="122" cy="8" r="1.8" fill="currentColor"/>
+                    <path d="M110 1 L117 8 L110 15 L103 8 Z" fill="currentColor"/>
+                </svg>
+            </span>
+
+            <!-- Arabic ayah (word-by-word highlight) -->
+            <div class="ayah-arabic-wrap">
+                <p class="ayah-arabic" id="ayah-arabic">وَمِنْ ءَايَـٰتِهِۦٓ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَٰجًۭا لِّتَسْكُنُوٓا۟ إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةًۭ وَرَحْمَةً ۚ إِنَّ فِى ذَٰلِكَ لَـَٔايَـٰتٍۢ لِّقَوْمٍۢ يَتَفَكَّرُونَ</p>
+            </div>
+
+            <!-- Translation card -->
+            <div class="ayah-trans-box">
+                <span class="ayah-quote">&ldquo;</span>
+                <span class="tb-corner tb-tl"></span>
+                <span class="tb-corner tb-tr"></span>
+                <span class="tb-corner tb-bl"></span>
+                <span class="tb-corner tb-br"></span>
+                <p class="ayah-translation">"And one of His signs is that He created for you spouses from among yourselves so that you may find comfort in them. And He has placed between you compassion and mercy. Surely in this are signs for people who reflect."</p>
+            </div>
+
+            <!-- Reference -->
+            <div class="ayah-ref-wrap">
+                <span class="ayah-ref">Surah Ar-Rum &middot; 30:21</span>
+                <span class="ayah-ornament ayah-ornament-ref">
+                    <svg viewBox="0 0 160 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M6 8 H64" stroke="currentColor" stroke-width="1"/>
+                        <path d="M96 8 H154" stroke="currentColor" stroke-width="1"/>
+                        <path d="M80 2 L86 8 L80 14 L74 8 Z" fill="currentColor"/>
+                    </svg>
+                </span>
+            </div>
+
+            <!-- Recitation progress -->
+            <div class="ayah-progress">
+                <div class="ayah-dots" id="ayah-dots">
+                    <span class="ayah-dot"></span>
+                    <span class="ayah-dot"></span>
+                    <span class="ayah-dot"></span>
+                    <span class="ayah-dot"></span>
+                    <span class="ayah-dot"></span>
+                </div>
+                <div class="ayah-progress-label">
+                    <span class="apl-wing left"></span>
+                    <span class="apl-text">Recitation</span>
+                    <span class="apl-wing right"></span>
+                </div>
+            </div>
+
+            <button type="button" id="ayah-skip" class="ayah-continue-btn">
+                <span class="ayah-continue-text">Skip &amp; Continue</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
     </div>
 
     <!-- 3. Main Website Content (Hidden until envelope opens) -->
@@ -268,6 +341,6 @@
         </footer>
     </main>
 
-    <script src="script.js?v=6"></script>
+    <script src="script.js?v=8"></script>
 </body>
 </html>

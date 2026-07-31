@@ -117,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ayahRecitation = document.getElementById("ayah-recitation");
     const ayahArabic = document.getElementById("ayah-arabic");
     const ayahSkip = document.getElementById("ayah-skip");
+    const ayahDots = envAyah ? Array.from(envAyah.querySelectorAll(".ayah-dot")) : [];
 
     // Split the ayah into individual words so each can be highlighted as it is recited
     let wordEls = [];
@@ -139,6 +140,11 @@ document.addEventListener("DOMContentLoaded", () => {
             el.classList.toggle("spoken", i < idx);
             el.classList.toggle("active", i === idx);
         });
+        // Fill the recitation-progress dots as playback advances
+        if (ayahDots.length) {
+            const filled = Math.min(Math.ceil(frac * ayahDots.length), ayahDots.length);
+            ayahDots.forEach((d, i) => d.classList.toggle("filled", i < filled));
+        }
     }
 
     // Reveal the ayah screen and auto-play the recitation. Called at the peak of
