@@ -192,6 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         audio.volume = 0;
         const startRamp = () => {
             musicToggle.classList.add("playing");
+            if (audio === duaRecitation) setMusicIcon(true);
             let i = 0;
             const timer = setInterval(() => {
                 i++;
@@ -366,12 +367,22 @@ document.addEventListener("DOMContentLoaded", () => {
             duaRecitation.play().catch(() => {});
             musicToggle.classList.add("playing");
             musicToggle.style.color = "var(--gold-dark)";
+            setMusicIcon(true);
         } else {
             duaRecitation.pause();
             musicToggle.classList.remove("playing");
             musicToggle.style.color = "var(--text-muted)";
+            setMusicIcon(false);
         }
     });
+
+    // Swap the toggle glyph: music note when playing, muted-volume when muted.
+    function setMusicIcon(isPlaying) {
+        const icon = musicToggle.querySelector("i");
+        if (!icon) return;
+        icon.classList.toggle("fa-music", isPlaying);
+        icon.classList.toggle("fa-volume-xmark", !isPlaying);
+    }
 
     // ==========================================
     // 4. COUNTDOWN TIMER ENGINE
