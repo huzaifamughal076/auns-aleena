@@ -1,5 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
+
+    // ==========================================
+    // 0. INVITATION VARIANT (?brother)
+    // ==========================================
+    // When the URL carries a "brother" param (e.g. ?brother), swap the parent-hosted
+    // wording for the brother-hosted version. Any element that provides a
+    // data-brother attribute has its inner HTML replaced with that value.
+    if (new URLSearchParams(window.location.search).has("brother")) {
+        document.querySelectorAll("[data-brother]").forEach((el) => {
+            el.innerHTML = el.getAttribute("data-brother");
+        });
+    }
+
     // ==========================================
     // 1. LOADING SCREEN CONTROLLER
     // ==========================================
