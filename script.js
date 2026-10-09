@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 position: absolute;
                 width: ${Math.random() * 3 + 1}px;
                 height: ${Math.random() * 3 + 1}px;
-                background: radial-gradient(circle, #F3E5AB, #D4AF37);
+                background: radial-gradient(circle, var(--gold-light), var(--gold-primary));
                 border-radius: 50%;
                 pointer-events: none;
                 box-shadow: 0 0 4px rgba(212, 175, 55, 0.3);

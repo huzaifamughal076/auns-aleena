@@ -985,10 +985,10 @@ footer { padding: 60px 20px 40px; }
    6b. BRIDE-SIDE THEME (?bride)
    ========================================== */
 /* Burgundy & rose-gold palette for the bride-side invitation, on the same
-   ivory background. Scoped to the main invitation (and the music button) so
-   the envelope / ayah screens and the groom & brother cards keep their gold theme. */
-.theme-bride .main-content,
-.theme-bride .music-btn {
+   ivory background. Applied only when <body> has .theme-bride, so the groom
+   and brother cards keep their gold theme. Covers the envelope, the ayah
+   recitation screen and the main invitation. */
+body.theme-bride {
     --gold-primary: #B07A6A;
     --gold-light: #EED9CF;
     --gold-dark: #7A2635;
@@ -1043,6 +1043,85 @@ footer { padding: 60px 20px 40px; }
 .theme-bride .top-left,
 .theme-bride .top-right {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 C30,0 70,20 80,50 C60,40 20,30 0,0 Z' fill='%23B07A6A'/%3E%3Cpath d='M0,0 C0,30 20,70 50,80 C40,60 30,20 0,0 Z' fill='%23B07A6A'/%3E%3C/svg%3E");
+}
+
+/* ---- Bride theme: envelope screen ---- */
+/* The seal and flower divider are gold artwork, so they are tinted rose-gold */
+.theme-bride .wax-seal {
+    filter: hue-rotate(-32deg) saturate(0.75) brightness(0.92)
+            drop-shadow(0 12px 20px rgba(122, 38, 53, 0.3));
+}
+.theme-bride .open-divider-img { filter: hue-rotate(-32deg) saturate(0.75) brightness(0.92); }
+.theme-bride .open-text { color: #8C3443; }
+.theme-bride .open-btn:hover .open-text { color: #5E1A26; }
+.theme-bride .env-glow-bg {
+    background-image:
+        radial-gradient(circle at 20% 28%, rgba(176, 122, 106, 0.08) 0%, transparent 42%),
+        radial-gradient(circle at 82% 72%, rgba(176, 122, 106, 0.07) 0%, transparent 42%);
+}
+
+/* ---- Bride theme: ayah recitation screen ---- */
+.theme-bride .env-ayah {
+    background: radial-gradient(ellipse at 50% 26%, #fffdfb 0%, #faf2ee 52%, #f1e1da 100%);
+}
+.theme-bride .ayah-bg-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%237A2635' stroke-width='0.8'%3E%3Ccircle cx='32' cy='32' r='16'/%3E%3Ccircle cx='0' cy='0' r='16'/%3E%3Ccircle cx='64' cy='0' r='16'/%3E%3Ccircle cx='0' cy='64' r='16'/%3E%3Ccircle cx='64' cy='64' r='16'/%3E%3Ccircle cx='32' cy='0' r='4'/%3E%3Ccircle cx='0' cy='32' r='4'/%3E%3Ccircle cx='64' cy='32' r='4'/%3E%3Ccircle cx='32' cy='64' r='4'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.07;
+}
+/* Mosque silhouette: same shape, tinted rose-gold */
+.theme-bride .ayah-bg-mosque { filter: hue-rotate(-32deg) saturate(0.75); opacity: 0.14; }
+.theme-bride .ayah-bg-sparkles {
+    background-image:
+        radial-gradient(circle at 15% 18%, rgba(176,122,106,0.7) 0 1.6px, transparent 2.2px),
+        radial-gradient(circle at 84% 14%, rgba(176,122,106,0.6) 0 1.4px, transparent 2px),
+        radial-gradient(circle at 70% 26%, rgba(176,122,106,0.5) 0 1.2px, transparent 1.8px),
+        radial-gradient(circle at 26% 40%, rgba(176,122,106,0.45) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 90% 46%, rgba(176,122,106,0.5) 0 1.2px, transparent 1.8px),
+        radial-gradient(circle at 10% 58%, rgba(176,122,106,0.45) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 55% 10%, rgba(176,122,106,0.55) 0 1.3px, transparent 1.9px);
+}
+.theme-bride .ayah-frame { border-color: rgba(176, 122, 106, 0.5); }
+.theme-bride .ayah-frame::after { border-color: rgba(176, 122, 106, 0.25); }
+.theme-bride .ayah-frame-corner,
+.theme-bride .ayah-emblem-finial { box-shadow: 0 0 8px rgba(176, 122, 106, 0.6); }
+.theme-bride .ayah-emblem-arch {
+    border-color: rgba(176, 122, 106, 0.55);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(238, 217, 207, 0.2));
+    box-shadow: inset 0 0 18px rgba(176, 122, 106, 0.14);
+}
+.theme-bride .ayah-emblem-book { filter: drop-shadow(0 2px 4px rgba(122, 38, 53, 0.25)); }
+.theme-bride .ayah-ornament { color: rgba(176, 122, 106, 0.8); }
+.theme-bride .ayah-arabic-wrap::before {
+    background: radial-gradient(ellipse at center, rgba(176, 122, 106, 0.16) 0%, transparent 62%);
+}
+.theme-bride .ayah-word { color: rgba(122, 38, 53, 0.25); }
+.theme-bride .ayah-word.active { text-shadow: 0 0 16px rgba(176, 122, 106, 0.6); }
+.theme-bride .ayah-trans-box {
+    border-color: rgba(176, 122, 106, 0.4);
+    background: linear-gradient(180deg, rgba(255, 253, 251, 0.8), rgba(250, 238, 233, 0.5));
+    box-shadow: 0 12px 30px rgba(122, 38, 53, 0.07), inset 0 0 24px rgba(255, 255, 255, 0.45);
+}
+.theme-bride .ayah-quote { text-shadow: 0 3px 8px rgba(176, 122, 106, 0.3); }
+.theme-bride .tb-corner { filter: hue-rotate(-32deg) saturate(0.75); }
+.theme-bride .ayah-dot {
+    background: rgba(176, 122, 106, 0.2);
+    border-color: rgba(176, 122, 106, 0.35);
+}
+.theme-bride .ayah-dot.filled { box-shadow: 0 0 9px rgba(176, 122, 106, 0.7); }
+.theme-bride .ayah-continue-btn {
+    background: linear-gradient(180deg, #A6505A 0%, #8C3443 45%, #6E2230 100%);
+    text-shadow: 0 1px 2px rgba(60, 10, 20, 0.4);
+    box-shadow: 0 10px 26px rgba(122, 38, 53, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.35),
+                inset 0 -3px 8px rgba(60, 10, 20, 0.3);
+}
+.theme-bride .ayah-continue-btn::before {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.25), transparent);
+}
+.theme-bride .ayah-continue-btn:hover {
+    box-shadow: 0 15px 34px rgba(122, 38, 53, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.35),
+                inset 0 -3px 8px rgba(60, 10, 20, 0.3);
 }
 
 /* ==========================================
