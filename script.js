@@ -1,12 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // ==========================================
-    // 0. INVITATION VARIANT (?brother)
+    // 0. INVITATION VARIANT (?bride / ?brother)
     // ==========================================
+    // When the URL carries a "bride" param (e.g. ?bride), show the bride-side
+    // invitation: elements marked data-bride-hide are removed, elements with
+    // data-bride-template get the named <template>'s content, and elements with
+    // a data-bride attribute have their inner HTML replaced with that value.
+    //
     // When the URL carries a "brother" param (e.g. ?brother), swap the parent-hosted
     // wording for the brother-hosted version. Any element that provides a
     // data-brother attribute has its inner HTML replaced with that value.
-    if (new URLSearchParams(window.location.search).has("brother")) {
+    const variantParams = new URLSearchParams(window.location.search);
+    if (variantParams.has("bride")) {
+        document.querySelectorAll("[data-bride-hide]").forEach((el) => el.remove());
+        document.querySelectorAll("[data-bride-template]").forEach((el) => {
+            const tpl = document.getElementById(el.getAttribute("data-bride-template"));
+            if (tpl) el.innerHTML = tpl.innerHTML;
+        });
+        document.querySelectorAll("[data-bride]").forEach((el) => {
+            el.innerHTML = el.getAttribute("data-bride");
+        });
+    } else if (variantParams.has("brother")) {
         document.querySelectorAll("[data-brother]").forEach((el) => {
             el.innerHTML = el.getAttribute("data-brother");
         });

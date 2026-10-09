@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Invitation | Auns & Aleena</title>
-    <link rel="stylesheet" href="style.css?v=19">
+    <link rel="stylesheet" href="style.css?v=20">
 
     <!-- Preload the envelope images shown first, so the opening screen paints fast -->
     <link rel="preload" as="image" href="assets/seal-bismillah.png">
@@ -187,18 +187,18 @@
             <div class="hero-inner">
                 <span class="event-tag gold-shimmer">Shalima Event</span>
 
-                <p class="host-line" data-brother="Huzaifa Mughal<br><span class=&quot;host-line-sub&quot;>cordially invites you to share in the joy and blessings of his beloved brother's wedding celebration</span>">
+                <p class="host-line" data-bride="Ms. Fareeda Sheikh<br><span class=&quot;host-line-sub&quot;>cordially invites you to share in the joy and blessings of her beloved daughter's wedding celebration</span>" data-brother="Huzaifa Mughal<br><span class=&quot;host-line-sub&quot;>cordially invites you to share in the joy and blessings of his beloved brother's wedding celebration</span>">
                     Mr. &amp; Mrs. Irfan Sharif<br>
                     <span class="host-line-sub">cordially invite you to share in the joy and blessings of their beloved son's wedding celebration</span>
                 </p>
 
-                <h1 class="couple-name">M. Auns Irfan</h1>
+                <h1 class="couple-name" data-bride="Alina Ishtiaq">M. Auns Irfan</h1>
                 <div class="couple-amp-wrap">
                     <span class="couple-amp">&amp;</span>
                 </div>
-                <h1 class="couple-name">Alina Ishtiaq</h1>
+                <h1 class="couple-name" data-bride="M. Auns Irfan">Alina Ishtiaq</h1>
                 
-                <p class="invitation-text" data-brother="“Together with our family, I joyfully invite you to celebrate my brother's wedding.”">
+                <p class="invitation-text" data-bride="“With our families, we joyfully invite you to celebrate our daughter's wedding.”" data-brother="“Together with our family, I joyfully invite you to celebrate my brother's wedding.”">
                     “Together with our families, we joyfully invite you to celebrate our son's wedding.”
                 </p>
                 <div class="decorative-divider"></div>
@@ -219,7 +219,7 @@
                     </div>
                 </div>
 
-                <div class="detail-item">
+                <div class="detail-item" data-bride-hide>
                     <div class="icon-box"><i class="fas fa-crown"></i></div>
                     <div class="detail-text">
                         <h3>Sehra Bandi</h3>
@@ -286,7 +286,7 @@
         <!-- R.S.V.P Section -->
         <section class="rsvp-section reveal">
             <h2 class="section-title">R.S.V.P</h2>
-            <div class="rsvp-card">
+            <div class="rsvp-card" data-bride-template="bride-rsvp">
                 <div class="card-border-glow"></div>
                 <div class="rsvp-item">
                     <a href="tel:03214423351" class="icon-box" aria-label="Call M. Ubaid Sharif"><i class="fas fa-phone"></i></a>
@@ -333,13 +333,39 @@
             </div>
         </section>
 
+        <!-- Bride-side R.S.V.P contacts (swapped into .rsvp-card on ?bride) -->
+        <template id="bride-rsvp">
+            <div class="card-border-glow"></div>
+            <div class="rsvp-item">
+                <a href="tel:03002217553" class="icon-box" aria-label="Call Fareed Ahmed"><i class="fas fa-phone"></i></a>
+                <div class="rsvp-text">
+                    <h3>Fareed Ahmed</h3>
+                    <a href="tel:03002217553">0300 2217553</a>
+                </div>
+            </div>
+            <div class="rsvp-item">
+                <div class="icon-box"><i class="fas fa-phone"></i></div>
+                <div class="rsvp-text">
+                    <h3>Hameed Ahmed</h3>
+                    <span class="rsvp-na">Not Available</span>
+                </div>
+            </div>
+            <div class="rsvp-item">
+                <div class="icon-box"><i class="fas fa-phone"></i></div>
+                <div class="rsvp-text">
+                    <h3>Abid Ali</h3>
+                    <span class="rsvp-na">Not Available</span>
+                </div>
+            </div>
+        </template>
+
         <!-- Looking Forward Section -->
         <section class="looking-forward-section reveal">
             <h2 class="section-title">Looking Forward</h2>
             <div class="looking-forward-card">
                 <div class="card-border-glow"></div>
                 <p class="lf-intro">With warm hearts, we are looking forward to welcoming you</p>
-                <div class="lf-names" data-brother="<p class=&quot;lf-name&quot;>Huzaifa Mughal</p>">
+                <div class="lf-names" data-bride="<p class=&quot;lf-name&quot;>Ms. Fareeda Sheikh</p><p class=&quot;lf-name&quot;>Mr. &amp;amp; Mrs. Fareed Ahmed</p>" data-brother="<p class=&quot;lf-name&quot;>Huzaifa Mughal</p>">
                     <p class="lf-name">Mr. &amp; Mrs. Ubaid Sharif</p>
                     <p class="lf-name">Mr. &amp; Mrs. Irfan Sharif</p>
                     <p class="lf-name">Mr. &amp; Mrs. Nadeem Ishaq</p>
@@ -355,6 +381,6 @@
         </footer>
     </main>
 
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=10"></script>
 </body>
 </html>

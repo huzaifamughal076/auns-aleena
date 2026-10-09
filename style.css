@@ -885,7 +885,8 @@ a.icon-box:hover, a.icon-box:focus {
     letter-spacing: 2px; color: var(--gold-dark); margin-bottom: 2px;
 }
 
-.rsvp-text a {
+.rsvp-text a,
+.rsvp-text .rsvp-na {
     font-family: 'Playfair Display', serif;
     font-size: 1.15rem; font-weight: 400; font-style: italic; color: #B5851C;
     text-decoration: none; letter-spacing: 0.3px;
