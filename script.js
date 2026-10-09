@@ -12,7 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // wording for the brother-hosted version. Any element that provides a
     // data-brother attribute has its inner HTML replaced with that value.
     const variantParams = new URLSearchParams(window.location.search);
-    if (variantParams.has("bride")) {
+    const isBrideSide = variantParams.has("bride");
+    if (isBrideSide) {
+        // Rose colour theme for the bride-side card (see "BRIDE-SIDE THEME" in style.css)
+        document.body.classList.add("theme-bride");
         document.querySelectorAll("[data-bride-hide]").forEach((el) => el.remove());
         document.querySelectorAll("[data-bride-template]").forEach((el) => {
             const tpl = document.getElementById(el.getAttribute("data-bride-template"));
@@ -279,15 +282,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const lat = 31.4815197;
         const lng = 74.4011883;
 
-        // Custom gold heart-shaped marker SVG
+        // Marker / popup colours follow the card theme (gold, or rose on ?bride)
+        const mapColors = isBrideSide
+            ? { light: "#EED9CF", primary: "#B07A6A", dark: "#7A2635" }
+            : { light: "#F3E5AB", primary: "#D4AF37", dark: "#AA7C11" };
+
+        // Custom heart-shaped marker SVG
         const markerSvg = `
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="60" viewBox="0 0 48 60">
                 <defs>
                     <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#F3E5AB"/>
-                        <stop offset="30%" style="stop-color:#D4AF37"/>
-                        <stop offset="60%" style="stop-color:#AA7C11"/>
-                        <stop offset="100%" style="stop-color:#F3E5AB"/>
+                        <stop offset="0%" style="stop-color:${mapColors.light}"/>
+                        <stop offset="30%" style="stop-color:${mapColors.primary}"/>
+                        <stop offset="60%" style="stop-color:${mapColors.dark}"/>
+                        <stop offset="100%" style="stop-color:${mapColors.light}"/>
                     </linearGradient>
                     <filter id="shadow">
                         <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/>
@@ -339,8 +347,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Add a subtle pulse circle behind the marker
         const pulseCircle = L.circleMarker([lat, lng], {
             radius: 20,
-            color: "#D4AF37",
-            fillColor: "#D4AF37",
+            color: mapColors.primary,
+            fillColor: mapColors.primary,
             fillOpacity: 0.08,
             weight: 1.5,
             opacity: 0.3
@@ -364,9 +372,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Optional: open popup on marker click
         marker.bindPopup(`
             <div style="text-align:center;font-family:'Cormorant Garamond',serif;padding:5px;">
-                <strong style="color:#AA7C11;font-size:16px;">Le Aura Grand Marquee</strong><br>
+                <strong style="color:${mapColors.dark};font-size:16px;">Le Aura Grand Marquee</strong><br>
                 <span style="color:#5C5856;font-size:13px;">Auns & Aleena Wedding</span><br>
-                <span style="color:#AA7C11;font-size:12px;">14 November 2026</span>
+                <span style="color:${mapColors.dark};font-size:12px;">14 November 2026</span>
             </div>
         `, { closeButton: true, className: "wedding-popup" });
 

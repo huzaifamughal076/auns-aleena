@@ -982,6 +982,70 @@ footer { padding: 60px 20px 40px; }
 }
 
 /* ==========================================
+   6b. BRIDE-SIDE THEME (?bride)
+   ========================================== */
+/* Burgundy & rose-gold palette for the bride-side invitation, on the same
+   ivory background. Scoped to the main invitation (and the music button) so
+   the envelope / ayah screens and the groom & brother cards keep their gold theme. */
+.theme-bride .main-content,
+.theme-bride .music-btn {
+    --gold-primary: #B07A6A;
+    --gold-light: #EED9CF;
+    --gold-dark: #7A2635;
+    --text-dark: #8C3443;
+    --text-muted: #A3727A;
+    --glass-shadow: 0 15px 35px rgba(122, 38, 53, 0.10);
+}
+
+.theme-bride .gold-shimmer {
+    background-image: linear-gradient(90deg, #7A2635, #D9B2A3, #7A2635);
+}
+
+.theme-bride .couple-name,
+.theme-bride .couple-amp {
+    background-image: linear-gradient(180deg, #E6C2B2 0%, #C48F7C 38%, #9E5E55 70%, #7A2F3A 100%);
+    filter: drop-shadow(0 2px 4px rgba(122, 38, 53, 0.18));
+}
+
+.theme-bride .host-line-sub,
+.theme-bride .invitation-text,
+.theme-bride .detail-text p,
+.theme-bride .rsvp-text a,
+.theme-bride .rsvp-text .rsvp-na,
+.theme-bride .lf-intro,
+.theme-bride .venue-sub,
+.theme-bride .closing { color: #8C3443; }
+
+.theme-bride .rsvp-text a:hover { color: #5E1A26; }
+
+.theme-bride .details-card,
+.theme-bride .rsvp-card,
+.theme-bride .looking-forward-card { border-color: rgba(176, 122, 106, 0.35); }
+
+.theme-bride .countdown-box { border-color: rgba(176, 122, 106, 0.25); }
+
+.theme-bride .icon-box { background: rgba(176, 122, 106, 0.08); }
+.theme-bride a.icon-box:hover,
+.theme-bride a.icon-box:focus { background: var(--gold-dark); }
+
+.theme-bride .card-border-glow {
+    background: linear-gradient(135deg, rgba(176, 122, 106, 0.4), transparent, rgba(176, 122, 106, 0.4)) border-box;
+}
+
+.theme-bride .premium-btn {
+    background-image: linear-gradient(135deg, #7A2635, #9E4A52, #7A2635);
+    box-shadow: 0 4px 15px rgba(122, 38, 53, 0.25);
+}
+.theme-bride .premium-btn:hover {
+    box-shadow: 0 6px 20px rgba(122, 38, 53, 0.4), 0 0 10px rgba(176, 122, 106, 0.4);
+}
+
+.theme-bride .top-left,
+.theme-bride .top-right {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 C30,0 70,20 80,50 C60,40 20,30 0,0 Z' fill='%23B07A6A'/%3E%3Cpath d='M0,0 C0,30 20,70 50,80 C40,60 30,20 0,0 Z' fill='%23B07A6A'/%3E%3C/svg%3E");
+}
+
+/* ==========================================
    7. MOBILE
    ========================================== */
 @media (max-width: 600px) {
